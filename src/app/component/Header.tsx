@@ -1,3 +1,5 @@
+"use client";
+import { ConnectButton } from "@razorlabs/razorkit";
 import Image from "next/image";
 import { FaChevronDown, FaWallet } from "react-icons/fa";
 export const Header = () => {
@@ -18,10 +20,11 @@ export const Header = () => {
           <span>Move</span>
           <FaChevronDown className="text-gray-400 text-xs" />
         </div>
-        <button className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-black px-6 py-2 rounded-lg font-medium hover:from-yellow-400 hover:to-yellow-500 transition shadow-lg flex items-center gap-2">
+
+        <ConnectButton className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-black px-6 py-2 rounded-lg font-medium hover:from-yellow-400 hover:to-yellow-500 transition shadow-lg flex items-center justify-center gap-2">
           <FaWallet />
           Connect Wallet
-        </button>
+        </ConnectButton>
       </div>
     </header>
   );
