@@ -12,7 +12,8 @@ export async function swapTokens(
   srcAsset: string = "0xa",
   dstAsset: string = "0xb89077cfd2a82a0c1450534d49cfd5f2707643155273069bc23a912bcfefdee7",
   amount: number = 0.0001,
-  decimals: number = 8
+  sedingDecimals: number = 6,
+  receivingDecimals: number = 6
 ) {
   try {
     const aptos = new Aptos(
@@ -43,7 +44,7 @@ export async function swapTokens(
         params: {
           srcAsset: srcAsset,
           dstAsset: dstAsset,
-          amount: (amount * 10 ** decimals).toString(),
+          amount: (amount * 10 ** sedingDecimals).toString(),
           sender: user.accountAddress.toString(),
           slippage: 100,
         },
@@ -57,25 +58,27 @@ export async function swapTokens(
       throw new Error("Error calling Mosaic API");
     }
 
-    const transaction = await aptos.transaction.build.simple({
-      sender: user.accountAddress,
-      data: {
-        function: mosaicResponse.data.data.tx.function,
-        typeArguments: mosaicResponse.data.data.tx.typeArguments || [],
-        functionArguments: mosaicResponse.data.data.tx.functionArguments || [],
-      },
-    });
+    // const transaction = await aptos.transaction.build.simple({
+    //   sender: user.accountAddress,
 
-    const pendingTransactionResponse =
-      await aptos.transaction.signAndSubmitTransaction({
-        signer: user,
-        transaction: transaction,
-      });
-    console.log("Pending transaction:", pendingTransactionResponse);
+    //   data: {
+    //     function: mosaicResponse.data.data.tx.function,
+    //     typeArguments: mosaicResponse.data.data.tx.typeArguments || [],
+    //     functionArguments: mosaicResponse.data.data.tx.functionArguments || [],
+    //   },
+    // });
+
+    // const pendingTransactionResponse =
+    //   await aptos.transaction.signAndSubmitTransaction({
+    //     signer: user,
+    //     transaction: transaction,
+    //   });
+    // console.log("Pending transaction:", pendingTransactionResponse);
     console.log(mosaicResponse);
-    return (mosaicResponse.data.data.dstAmount / 10 ** decimals).toFixed(
-      decimals
-    );
+    return (
+      mosaicResponse.data.data.dstAmount /
+      10 ** receivingDecimals
+    ).toFixed(receivingDecimals);
   } catch (error) {
     console.error("Error swapping tokens:", error);
   }

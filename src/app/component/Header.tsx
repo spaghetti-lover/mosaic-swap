@@ -9,6 +9,8 @@ export const Header = () => {
       <div className="flex items-center space-x-4">
         <div className="text-sm flex items-center gap-2 bg-gray-800 px-4 py-2 rounded-lg hover:bg-gray-700 transition cursor-pointer">
           <Image
+            width={6}
+            height={6}
             src="/image/MOVE.png"
             alt="Move Token"
             className="w-6 h-6 rounded-full"

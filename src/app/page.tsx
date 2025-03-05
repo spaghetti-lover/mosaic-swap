@@ -9,10 +9,11 @@ import { Footer } from "./component/Footer";
 import Image from "next/image";
 
 export default function SwapPage() {
-  const [payingAmount, setPayingAmount] = useState("1");
+  const [payingAmount, setPayingAmount] = useState("0.0001");
   const [receivingAmount, setReceivingAmount] = useState("");
   const [showPayTokenList, setShowPayTokenList] = useState(false);
   const [showReceiveTokenList, setShowReceiveTokenList] = useState(false);
+  const [isSwapping, setIsSwapping] = useState(false);
   const [selectedPayToken, setSelectedPayToken] = useState({
     symbol: "MOVE",
     name: "Mosaic Movement",
@@ -66,7 +67,7 @@ export default function SwapPage() {
       icon: "/image/WETH.png",
       srcAsset:
         "0xab85cf20d26368dc43b49152a7b4543eb86c6a2d98c30b9b2cfb7b574f364981",
-      decimal: 18,
+      decimal: 8,
     },
     {
       symbol: "USDT.e",
@@ -81,15 +82,20 @@ export default function SwapPage() {
   const handleSwap = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
+      setIsSwapping(true);
+      // await new Promise((resolve) => setTimeout(resolve, 5000));
       const swappedAmount = await swapTokens(
         selectedPayToken.srcAsset,
         selectedReceiveToken.srcAsset,
         parseFloat(payingAmount),
-        selectedPayToken.decimal
+        selectedPayToken.decimal,
+        selectedReceiveToken.decimal
       );
       setReceivingAmount(swappedAmount || "");
     } catch (error) {
       console.error("Error swapping tokens:", error);
+    } finally {
+      setIsSwapping(false);
     }
   };
   const filteredTokens = tokens.filter(
@@ -145,9 +151,11 @@ export default function SwapPage() {
               onClick={() => setShowPayTokenList(!showPayTokenList)}
             >
               <Image
+                width={24}
+                height={24}
                 src={selectedPayToken.icon}
                 alt={selectedPayToken.symbol}
-                className="w-6 h-6 rounded-full"
+                className="rounded-full"
               />
               <span className="text-yellow-400 font-medium">
                 {selectedPayToken.symbol}
@@ -187,6 +195,8 @@ export default function SwapPage() {
                   >
                     <div className="flex items-center gap-3">
                       <Image
+                        width={24}
+                        height={24}
                         src={token.icon}
                         alt={token.symbol}
                         className="w-8 h-8 rounded-full"
@@ -229,9 +239,11 @@ export default function SwapPage() {
               onClick={() => setShowReceiveTokenList(!showReceiveTokenList)}
             >
               <Image
+                width={24}
+                height={24}
                 src={selectedReceiveToken.icon}
                 alt={selectedReceiveToken.symbol}
-                className="w-6 h-6 rounded-full"
+                className="rounded-full"
               />
               <span className="text-yellow-400 font-medium">
                 {selectedReceiveToken.symbol}
@@ -269,9 +281,11 @@ export default function SwapPage() {
                   >
                     <div className="flex items-center gap-3">
                       <Image
+                        width={24}
+                        height={24}
                         src={token.icon}
                         alt={token.symbol}
-                        className="w-8 h-8 rounded-full"
+                        className="rounded-full"
                       />
                       <div>
                         <p className="font-medium">{token.symbol}</p>
@@ -303,10 +317,16 @@ export default function SwapPage() {
         {/* Swap Token Button */}
         <button
           type="submit"
-          className="cursor-pointer w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-black px-4 py-4 rounded-xl text-lg font-semibold hover:from-yellow-400 hover:to-yellow-500 transition shadow-lg flex items-center justify-center gap-2"
+          className={`cursor-pointer w-full px-4 py-4 rounded-xl text-lg font-semibold transition shadow-lg flex items-center justify-center gap-2 
+          ${
+            isSwapping
+              ? "bg-gray-600 cursor-not-allowed text-black"
+              : "bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-black"
+          }`}
+          disabled={isSwapping}
         >
           <FaWallet />
-          Swap
+          {isSwapping ? "Swapping..." : "Swap"}
         </button>
       </form>
 
