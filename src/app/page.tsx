@@ -1,12 +1,6 @@
 "use client";
 import { useState } from "react";
-import {
-  FaCog,
-  FaChevronDown,
-  FaExchangeAlt,
-  FaWallet,
-  FaSearch,
-} from "react-icons/fa";
+import { FaCog, FaChevronDown, FaWallet, FaSearch } from "react-icons/fa";
 import { FiInfo } from "react-icons/fi";
 import { swapTokens } from "@/app/helper/index.ts";
 import { Header } from "./component/Header";
@@ -27,13 +21,13 @@ export default function SwapPage() {
     decimal: 8,
   });
   const [selectedReceiveToken, setSelectedReceiveToken] = useState({
-    symbol: "FAKE",
-    name: "Fake Token",
-    balance: "0",
-    icon: "/image/FAKE.png",
+    symbol: "USDC.e",
+    name: "USDC.e",
+    balance: "0.05",
+    icon: "/image/USDC.png",
     srcAsset:
-      "0x2092ebb9cd4279c252efd4a778d143ad65d759401773b4fbbc163513e04ac108",
-    decimal: 8,
+      "0xb89077cfd2a82a0c1450534d49cfd5f2707643155273069bc23a912bcfefdee7",
+    decimal: 6,
   });
   const [searchToken, setSearchToken] = useState("");
 
@@ -87,13 +81,12 @@ export default function SwapPage() {
     try {
       e.preventDefault();
       const swappedAmount = await swapTokens(
-        "0x09b7c8121bc6df4d1e60d1d535be70b23f1c2e6a1e2c4031f20fd6028796c968",
         selectedPayToken.srcAsset,
         selectedReceiveToken.srcAsset,
         parseFloat(payingAmount),
         selectedPayToken.decimal
       );
-      setReceivingAmount(swappedAmount);
+      setReceivingAmount(swappedAmount || "");
     } catch (error) {
       console.error("Error swapping tokens:", error);
     }
@@ -104,12 +97,12 @@ export default function SwapPage() {
       token.name.toLowerCase().includes(searchToken.toLowerCase())
   );
 
-  const selectPayToken = (token) => {
+  const selectPayToken = (token: any) => {
     setSelectedPayToken(token);
     setShowPayTokenList(false);
   };
 
-  const selectReceiveToken = (token) => {
+  const selectReceiveToken = (token: any) => {
     setSelectedReceiveToken(token);
     setShowReceiveTokenList(false);
   };
@@ -140,6 +133,9 @@ export default function SwapPage() {
             <input
               type="number"
               className="bg-transparent outline-none text-xl w-full font-medium"
+              step="0.00000001"
+              max="100"
+              min="0"
               value={payingAmount}
               onChange={(e) => setPayingAmount(e.target.value)}
             />

@@ -9,7 +9,6 @@ import {
 import axios from "axios";
 
 export async function swapTokens(
-  privateKey: string = "0x09b7c8121bc6df4d1e60d1d535be70b23f1c2e6a1e2c4031f20fd6028796c968",
   srcAsset: string = "0xa",
   dstAsset: string = "0xb89077cfd2a82a0c1450534d49cfd5f2707643155273069bc23a912bcfefdee7",
   amount: number = 0.0001,
@@ -21,10 +20,18 @@ export async function swapTokens(
         fullnode: "https://aptos.testnet.bardock.movementlabs.xyz/v1",
       })
     );
-    // const privateKeyHex = PrivateKey.formatPrivateKey(
-    //   "0x09b7c8121bc6df4d1e60d1d535be70b23f1c2e6a1e2c4031f20fd6028796c968",
-    //   PrivateKeyVariants.Ed25519
-    // );
+    if (!process.env.NEXT_PUBLIC_PRIVATE_KEY) {
+      throw new Error(
+        "PRIVATE_KEY is not defined in the environment variables"
+      );
+    }
+    if (!process.env.NEXT_PUBLIC_X_API_KEY) {
+      throw new Error("X_API_KEY is not defined in the environment variables");
+    }
+    const privateKey = PrivateKey.formatPrivateKey(
+      process.env.NEXT_PUBLIC_PRIVATE_KEY,
+      PrivateKeyVariants.Ed25519
+    );
     const user = Account.fromPrivateKey({
       privateKey: new Ed25519PrivateKey(privateKey),
     });
@@ -36,18 +43,18 @@ export async function swapTokens(
         params: {
           srcAsset: srcAsset,
           dstAsset: dstAsset,
-          amount: (amount * 100000000).toString(),
+          amount: (amount * 10 ** decimals).toString(),
           sender: user.accountAddress.toString(),
           slippage: 100,
         },
         headers: {
-          "X-API-KEY": "PWNpDllwqV7DdnKVThUhGF7i0F2FpDFm",
+          "X-API-KEY": process.env.NEXT_PUBLIC_X_API_KEY,
         },
       }
     );
 
     if (!mosaicResponse.data || !mosaicResponse.data.data?.tx) {
-      throw new Error("Lỗi goi API  dcm nhà m");
+      throw new Error("Error calling Mosaic API");
     }
 
     const transaction = await aptos.transaction.build.simple({
