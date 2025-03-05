@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FaChevronDown, FaWallet } from "react-icons/fa";
 export const Header = () => {
   return (
@@ -7,7 +8,7 @@ export const Header = () => {
       </h1>
       <div className="flex items-center space-x-4">
         <div className="text-sm flex items-center gap-2 bg-gray-800 px-4 py-2 rounded-lg hover:bg-gray-700 transition cursor-pointer">
-          <img
+          <Image
             src="/image/MOVE.png"
             alt="Move Token"
             className="w-6 h-6 rounded-full"

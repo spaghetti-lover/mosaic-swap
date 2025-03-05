@@ -6,6 +6,7 @@ import { swapTokens } from "@/app/helper/index.ts";
 import { Header } from "./component/Header";
 import { SwapIcon } from "./component/SwapIcon";
 import { Footer } from "./component/Footer";
+import Image from "next/image";
 
 export default function SwapPage() {
   const [payingAmount, setPayingAmount] = useState("1");
@@ -143,7 +144,7 @@ export default function SwapPage() {
               className="flex items-center gap-2 bg-gray-800 px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-700 transition"
               onClick={() => setShowPayTokenList(!showPayTokenList)}
             >
-              <img
+              <Image
                 src={selectedPayToken.icon}
                 alt={selectedPayToken.symbol}
                 className="w-6 h-6 rounded-full"
@@ -185,7 +186,7 @@ export default function SwapPage() {
                     onClick={() => selectPayToken(token)}
                   >
                     <div className="flex items-center gap-3">
-                      <img
+                      <Image
                         src={token.icon}
                         alt={token.symbol}
                         className="w-8 h-8 rounded-full"
@@ -227,7 +228,7 @@ export default function SwapPage() {
               className="flex items-center gap-2 bg-gray-800 px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-700 transition"
               onClick={() => setShowReceiveTokenList(!showReceiveTokenList)}
             >
-              <img
+              <Image
                 src={selectedReceiveToken.icon}
                 alt={selectedReceiveToken.symbol}
                 className="w-6 h-6 rounded-full"
@@ -267,7 +268,7 @@ export default function SwapPage() {
                     onClick={() => selectReceiveToken(token)}
                   >
                     <div className="flex items-center gap-3">
-                      <img
+                      <Image
                         src={token.icon}
                         alt={token.symbol}
                         className="w-8 h-8 rounded-full"
