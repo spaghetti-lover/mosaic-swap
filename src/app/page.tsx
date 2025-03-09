@@ -8,7 +8,7 @@ import { TokenForm } from "./component/form/Form";
 export default function SwapPage() {
   return (
     <WalletProvider>
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white flex flex-col items-center p-6">
+      <div className="min-h-screen  text-white flex flex-col items-center p-6">
         {/* Header */}
         <Header />
         {/* Swap Box */}

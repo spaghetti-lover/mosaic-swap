@@ -109,8 +109,14 @@ export const TokenForm = () => {
   return (
     <form className="w-full max-w-md bg-gray-800/70 backdrop-blur-md p-8 rounded-3xl shadow-xl border border-gray-700 relative">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold">Swap Tokens</h2>
-        <FaCog className="cursor-pointer text-gray-400 hover:text-white transition text-lg" />
+        <h2 className="text-2xl font-semibold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">Swap Tokens</h2>
+        <FaCog
+          className="cursor-pointer text-gray-400 hover:text-white transition text-lg"
+          style={{ transition: "transform 1s", transformOrigin: "center" }}
+          onMouseEnter={(e) => (e.currentTarget.style.transform = "rotate(360deg)")}
+          onMouseLeave={(e) => (e.currentTarget.style.transform = "rotate(0deg)")}
+          onClick={() => alert("Settings clicked")}
+        />
       </div>
 
       {/* Paying Section */}
