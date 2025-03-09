@@ -7,7 +7,7 @@ import { tokens } from "@/app/variable/token";
 import { PayingSection } from "./PayingSection";
 import { ReceivingSection } from "./ReceivingSection";
 import { SwapButton } from "./SwapButton";
-import { useWallet } from "@razorlabs/razorkit";
+import { useAccount, useWallet } from "@razorlabs/razorkit";
 
 export const TokenForm = () => {
   const [payingAmount, setPayingAmount] = useState("0.0001");
