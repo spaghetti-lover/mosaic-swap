@@ -3,7 +3,7 @@ export const tokens = [
     symbol: "MOVE",
     name: "Movement Coin",
     balance: "13.45",
-    icon: "/image/Move.png",
+    icon: "/image/MOVE.png",
     srcAsset: "0xa",
     decimal: 8,
   },

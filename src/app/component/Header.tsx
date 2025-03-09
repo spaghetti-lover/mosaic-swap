@@ -1,8 +1,17 @@
 "use client";
-import { ConnectButton } from "@razorlabs/razorkit";
+import {
+  ConnectButton,
+  useAccountBalance,
+  useWallet,
+  ErrorCode,
+  formatCurrency,
+} from '@razorlabs/razorkit';
 import Image from "next/image";
 import { FaChevronDown, FaWallet } from "react-icons/fa";
+
 export const Header = () => {
+  const wallet = useWallet();
+  const { balance } = useAccountBalance();
   return (
     <header className="w-full max-w-2xl flex justify-between items-center py-6 mb-10">
       <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
@@ -21,7 +30,12 @@ export const Header = () => {
           <FaChevronDown className="text-gray-400 text-xs" />
         </div>
 
-        <ConnectButton className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-black px-6 py-2 rounded-lg font-medium hover:from-yellow-400 hover:to-yellow-500 transition shadow-lg flex items-center justify-center gap-2">
+        <ConnectButton
+          className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-black px-6 py-2 rounded-lg font-medium hover:from-yellow-400 hover:to-yellow-500 transition shadow-lg flex items-center justify-center gap-2"
+          onConnectSuccess={(name) => {
+            console.log('connect success: ', name);
+          }}
+        >
           <FaWallet />
           Connect Wallet
         </ConnectButton>

@@ -1,6 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
-import { swapTokens, swapTokensAndTransaction } from "@/app/helper/index.ts";
 import { Header } from "./component/Header";
 import { Footer } from "./component/Footer";
 import { WalletProvider } from "@razorlabs/razorkit";

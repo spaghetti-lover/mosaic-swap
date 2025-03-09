@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { FaCog, FaExchangeAlt } from "react-icons/fa";
-import { swapTokens, swapTokensAndTransaction } from "@/app/helper/index.ts";
+import { swapTokens, swapTokensAndTransactionWithouPrivateKey } from "@/app/helper/index.ts";
 import "@razorlabs/razorkit/style.css";
 import { PriceInfo } from "@/app/component/PriceInfo";
 import { tokens } from "@/app/variable/token";
 import { PayingSection } from "./PayingSection";
 import { ReceivingSection } from "./ReceivingSection";
 import { SwapButton } from "./SwapButton";
+import { useWallet } from "@razorlabs/razorkit";
 
 export const TokenForm = () => {
   const [payingAmount, setPayingAmount] = useState("0.0001");
@@ -18,7 +19,7 @@ export const TokenForm = () => {
     symbol: "MOVE",
     name: "Mosaic Movement",
     balance: "13.45",
-    icon: "/image/Move.png",
+    icon: "/image/MOVE.png",
     srcAsset: "0xa",
     decimal: 8,
   });
@@ -39,16 +40,22 @@ export const TokenForm = () => {
     setSelectedReceiveToken(tempPayToken);
   };
 
+  const { signAndSubmitTransaction, connected } = useWallet();
+
   const handleSwapAndTransaction = async () => {
+    if (!connected) {
+      alert("Please login");
+      return;
+    }
     try {
       setIsSwapping(true);
-
-      const executedTransaction = await swapTokensAndTransaction(
+      const executedTransaction = await swapTokensAndTransactionWithouPrivateKey(
         selectedPayToken.srcAsset,
         selectedReceiveToken.srcAsset,
         parseFloat(payingAmount),
         selectedPayToken.decimal,
-        selectedReceiveToken.decimal
+        selectedReceiveToken.decimal,
+        signAndSubmitTransaction
       );
       alert("Swap successful: " + executedTransaction);
     } catch (error) {
