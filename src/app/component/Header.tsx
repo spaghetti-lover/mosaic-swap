@@ -1,6 +1,8 @@
 "use client";
 import {
   ConnectButton,
+  formatCurrency,
+  useAccountBalance,
   useWallet,
 } from '@razorlabs/razorkit';
 import Image from "next/image";
@@ -11,6 +13,9 @@ export const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { connected, chain, changeNetwork } = useWallet();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const wallet = useWallet();
+
+  const { error, loading, balance } = useAccountBalance();
 
   const handleNetworkChange = async (networkId: number) => {
     if (!connected) {
@@ -20,6 +25,8 @@ export const Header = () => {
 
     try {
       await changeNetwork(networkId);
+      console.log('chain:', chain);
+      console.log('balance:', balance);
       setDropdownOpen(false);
     } catch (error) {
       console.error('Failed to change network:', error);
@@ -31,7 +38,6 @@ export const Header = () => {
       setDropdownOpen(false);
     }
   };
-
   useEffect(() => {
     if (dropdownOpen) {
       document.addEventListener("mousedown", handleClickOutside);
@@ -94,9 +100,15 @@ export const Header = () => {
             console.log('connect success: ', name);
           }}
         >
+
           <FaWallet />
           Connect Wallet
         </ConnectButton>
+        {wallet.connected ? (<div>wallet balance:{' '}
+          {formatCurrency(balance ?? 0, {
+            withAbbr: false,
+            decimals: 8,
+          })}{' '}</div>) : <div>D co gi</div>}
       </div>
     </header>
   );
