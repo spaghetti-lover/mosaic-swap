@@ -11,6 +11,7 @@ import { useState, useEffect, useRef } from 'react';
 
 export const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [chainName, setChainName] = useState<string | null>(null);
   const { connected, chain, changeNetwork } = useWallet();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const wallet = useWallet();
@@ -25,8 +26,7 @@ export const Header = () => {
 
     try {
       await changeNetwork(networkId);
-      console.log('chain:', chain);
-      console.log('balance:', balance);
+      setChainName(networkId === 126 ? 'Mainnet' : 'Bardock Testnet');
       setDropdownOpen(false);
     } catch (error) {
       console.error('Failed to change network:', error);
@@ -38,6 +38,7 @@ export const Header = () => {
       setDropdownOpen(false);
     }
   };
+
   useEffect(() => {
     if (dropdownOpen) {
       document.addEventListener("mousedown", handleClickOutside);
@@ -49,6 +50,12 @@ export const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownOpen]);
+
+  useEffect(() => {
+    if (chain) {
+      setChainName(chain.name);
+    }
+  }, [chain]);
 
   return (
     <header className="w-full max-w-2xl flex justify-between items-center py-6 mb-10">
@@ -70,7 +77,7 @@ export const Header = () => {
                 alt="Move Token"
                 className="w-6 h-6 rounded-full"
               />
-              <span>{chain?.name || 'Select Network'}</span>
+              <span>{chainName || 'Select Network'}</span>
               <FaChevronDown className="text-gray-400 text-xs" />
             </div>
             {dropdownOpen && (
@@ -100,15 +107,9 @@ export const Header = () => {
             console.log('connect success: ', name);
           }}
         >
-
           <FaWallet />
           Connect Wallet
         </ConnectButton>
-        {wallet.connected ? (<div>wallet balance:{' '}
-          {formatCurrency(balance ?? 0, {
-            withAbbr: false,
-            decimals: 8,
-          })}{' '}</div>) : <div>D co gi</div>}
       </div>
     </header>
   );
