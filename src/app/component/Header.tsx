@@ -1,8 +1,6 @@
 "use client";
 import {
   ConnectButton,
-  formatCurrency,
-  useAccountBalance,
   useWallet,
 } from '@razorlabs/razorkit';
 import Image from "next/image";
@@ -14,9 +12,6 @@ export const Header = () => {
   const [chainName, setChainName] = useState<string | null>(null);
   const { connected, chain, changeNetwork } = useWallet();
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const wallet = useWallet();
-
-  const { error, loading, balance } = useAccountBalance();
 
   const handleNetworkChange = async (networkId: number) => {
     if (!connected) {
@@ -100,7 +95,6 @@ export const Header = () => {
             )}
           </div>
         </div>
-
         <ConnectButton
           className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-black px-6 py-2 rounded-lg font-medium hover:from-yellow-400 hover:to-yellow-500 transition shadow-lg flex items-center justify-center gap-2"
           onConnectSuccess={(name) => {

@@ -41,7 +41,7 @@ export const TokenForm = () => {
     setSelectedReceiveToken(tempPayToken);
   };
 
-  const { signAndSubmitTransaction, connected, changeNetwork } = useWallet();
+  const { signAndSubmitTransaction, connected } = useWallet();
 
   const handleSwapAndTransaction = async () => {
     if (!connected) {

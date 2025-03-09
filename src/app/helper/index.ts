@@ -18,11 +18,6 @@ export async function swapTokens(
   receivingDecimals: number = 6
 ) {
   try {
-    const aptos = new Aptos(
-      new AptosConfig({
-        fullnode: "https://aptos.testnet.bardock.movementlabs.xyz/v1",
-      })
-    );
     if (!process.env.NEXT_PUBLIC_PRIVATE_KEY) {
       throw new Error(
         "PRIVATE_KEY is not defined in the environment variables"
