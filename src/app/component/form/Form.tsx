@@ -7,7 +7,7 @@ import { tokens } from "@/app/variable/token";
 import { PayingSection } from "./PayingSection";
 import { ReceivingSection } from "./ReceivingSection";
 import { SwapButton } from "./SwapButton";
-import { useAccount, useWallet } from "@razorlabs/razorkit";
+import { useWallet } from "@razorlabs/razorkit";
 
 export const TokenForm = () => {
   const [payingAmount, setPayingAmount] = useState("0.0001");
@@ -34,13 +34,14 @@ export const TokenForm = () => {
   });
   const [searchToken, setSearchToken] = useState("");
 
+
   const handleSwapTokens = () => {
     const tempPayToken = selectedPayToken;
     setSelectedPayToken(selectedReceiveToken);
     setSelectedReceiveToken(tempPayToken);
   };
 
-  const { signAndSubmitTransaction, connected } = useWallet();
+  const { signAndSubmitTransaction, connected, changeNetwork } = useWallet();
 
   const handleSwapAndTransaction = async () => {
     if (!connected) {
@@ -115,11 +116,9 @@ export const TokenForm = () => {
           style={{ transition: "transform 1s", transformOrigin: "center" }}
           onMouseEnter={(e) => (e.currentTarget.style.transform = "rotate(360deg)")}
           onMouseLeave={(e) => (e.currentTarget.style.transform = "rotate(0deg)")}
-          onClick={() => alert("Settings clicked")}
         />
       </div>
 
-      {/* Paying Section */}
       <PayingSection
         payingAmount={payingAmount}
         setPayingAmount={setPayingAmount}
@@ -132,7 +131,6 @@ export const TokenForm = () => {
         selectPayToken={selectPayToken}
       />
 
-      {/* Swap Icon */}
       <div className="flex justify-center my-4 relative">
         <div className="absolute left-0 right-0 border-t border-gray-700 top-1/2"></div>
         <button
@@ -144,7 +142,6 @@ export const TokenForm = () => {
         </button>
       </div>
 
-      {/* Receiving Section */}
       <ReceivingSection
         receivingAmount={receivingAmount}
         setReceivingAmount={setReceivingAmount}
@@ -157,13 +154,11 @@ export const TokenForm = () => {
         selectReceiveToken={selectReceiveToken}
       />
 
-      {/* Price Info */}
       <PriceInfo
         selectedPayToken={selectedPayToken}
         selectedReceiveToken={selectedReceiveToken}
       />
 
-      {/* Swap Token Button */}
       <SwapButton
         isSwapping={isSwapping}
         handleSwapAndTransaction={handleSwapAndTransaction}

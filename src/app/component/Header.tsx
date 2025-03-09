@@ -9,7 +9,7 @@ import { useState, useEffect, useRef } from 'react';
 
 export const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { connected, account, chain, changeNetwork } = useWallet();
+  const { connected, chain, changeNetwork } = useWallet();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleNetworkChange = async (networkId: number) => {
@@ -20,7 +20,7 @@ export const Header = () => {
 
     try {
       await changeNetwork(networkId);
-      setDropdownOpen(false); // Close dropdown after changing network
+      setDropdownOpen(false);
     } catch (error) {
       console.error('Failed to change network:', error);
     }
@@ -46,8 +46,8 @@ export const Header = () => {
 
   return (
     <header className="w-full max-w-2xl flex justify-between items-center py-6 mb-10">
-      <h1 className="flex gap-2 items-center text-3xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
-        <Image width={48} height={48} src={"/image/mosaic.avif"} alt="Move" className="rounded-full" />
+      <h1 className="flex items-center text-3xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
+        <Image width={48} height={48} src={"/image/mosaic.avif"} alt="Move" className="rounded-full mr-2" />
         Mosaic
       </h1>
       <div className="flex items-center space-x-4">
