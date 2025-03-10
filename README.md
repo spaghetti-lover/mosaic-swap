@@ -7,6 +7,7 @@ Create .env file in root folder with these API KEY:
 NEXT_PUBLIC_PRIVATE_KEY=<YOUR_PRIVATE_KEY>
 NEXT_PUBLIC_X_API_KEY=<YOUR_X_API_KEY>
 ```
+Run this command
 ```bash
 npm install
 npm run dev
