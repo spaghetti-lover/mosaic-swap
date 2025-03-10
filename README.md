@@ -14,7 +14,6 @@ npm run dev
 ```
 
 ## To do
-- [ ] Done giao
-- [x] Thiết kế giao diện trang chủ  
-- [ ] Viết tài liệu hướng dẫn  
-- [ ] Kiểm thử API
+- [X] Done UI
+- [X] Implement swap and execute transaction function
+- [ ] Fix some bullshit bugs
