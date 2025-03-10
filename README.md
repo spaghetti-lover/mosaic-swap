@@ -1,13 +1,12 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
+## Introduction
+A simple swapper between USDC, Move, ETH,... coin
 
 ## Run
 Create .env file in root folder with these API KEY:
-- NEXT_PUBLIC_PRIVATE_KEY=
-- NEXT_PUBLIC_X_API_KEY=
+```bash
+NEXT_PUBLIC_PRIVATE_KEY=<YOUR_PRIVATE_KEY>
+NEXT_PUBLIC_X_API_KEY=<YOUR_X_API_KEY>
+```
 ```bash
 npm install
 npm run dev
